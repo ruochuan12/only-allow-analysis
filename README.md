@@ -20,6 +20,10 @@ whichPMRuns()
 //> {name: "pnpm", version: "0.64.2"}
 ```
 
+## Related
+
+* [which-pm](https://github.com/zkochan/which-pm) - Detects what package manager was used for installation
+
 ## License
 
 [MIT](LICENSE) © [Zoltan Kochan](http://kochan.io)
