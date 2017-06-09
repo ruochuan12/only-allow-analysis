@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/zkochan/which-pm-runs#readme",
   "devDependencies": {
-    "execa": "^0.6.3",
+    "execa": "^0.7.0",
     "npm": "^5.0.0",
     "pnpm": "^0.69.0",
     "tape": "^4.6.3",
