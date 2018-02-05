@@ -6,6 +6,9 @@
   "files": [
     "index.js"
   ],
+  "engines": {
+    "node": ">=4"
+  },
   "scripts": {
     "test": "tape test"
   },
