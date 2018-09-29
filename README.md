@@ -1,3 +1,5 @@
+> this package has been moved to https://github.com/zkochan/packages/tree/master/which-pm-runs
+
 # which-pm-runs
 
 > Detects what package manager executes the process
