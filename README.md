@@ -3,7 +3,7 @@ highlight: darcula
 theme: smartblue
 ---
 
-# 从 vue3 和 element-plus 中，我学到了一行代码统一规范团队包管理器的神器
+# 从 vue3 和 vite 项目中，我学到了一行代码统一规范团队包管理器的神器
 ## 1. 前言
 
 >大家好，我是[若川](https://lxchuan12.gitee.io)。最近组织了[源码共读活动](https://juejin.cn/pin/7005372623400435725)，感兴趣的可以加我微信 [ruochuan12](https://juejin.cn/pin/7005372623400435725) 参与，或者关注我的[公众号若川视野](https://lxchuan12.gitee.io)，回复“源码”参与。已进行三个月，大家一起交流学习，共同进步，很多人都表示收获颇丰。
@@ -80,7 +80,7 @@ if (!/pnpm/.test(process.env.npm_execpath || '')) {
 >`process.argv` 属性返回一个数组，由命令行执行脚本时的各个参数组成。它的第一个成员总是 `node`，第二个成员是脚本文件名，其余成员是脚本文件的参数。
 
 这段代码能文章开头场景提出的问题，但是总不能每个项目都复制粘贴这段代码吧。我们是不是可以封装成 npm 包使用。
-当时我也没想太多，也没有封装 npm 包。直到我翻看 [element-plus](https://github1s.com/element-plus/element-plus/blob/HEAD/package.json#L33) 源码发现了 [only-allow](https://github.com/pnpm/only-allow) 这个包。**一行代码统一规范包管理器**。
+当时我也没想太多，也没有封装 npm 包。直到我翻看 [vite](https://github.com/vitejs/vite/blob/main/package.json#L12) 源码发现了 [only-allow](https://github.com/pnpm/only-allow) 这个包。**一行代码统一规范包管理器**。
 
 ```js
 {
@@ -95,6 +95,8 @@ if (!/pnpm/.test(process.env.npm_execpath || '')) {
 
 按照惯例，看源码前先准备环境。
 ## 4. 环境准备
+
+先克隆代码。
 ### 4.1 克隆代码
 
 ```bash
@@ -104,11 +106,34 @@ cd only-allow-analysis/only-allow
 # npm i -g pnpm
 pnpm i
 
+# 或者克隆官方仓库
 git clone https://github.com/pnpm/only-allow.git
 cd only-allow
 # npm i -g pnpm
 pnpm i
 ```
+
+开源项目一般先看[README.md](https://github.com/pnpm/only-allow)。
+
+>Force a specific package manager to be used on a project
+
+强制在项目上使用特定的包管理器
+
+**Usage**
+
+>Add a preinstall script to your project's package.json.
+
+If you want to force [yarn](https://yarnpkg.com/), add:
+
+```js
+{
+  "scripts": {
+    "preinstall": "npx only-allow yarn"
+  }
+}
+```
+
+同理可得：强制使用 `npm`、`pnpm`也是类似设置。
 ### 4.2 调试源码
 
 我们通过查看 `package.json` 文件。
@@ -244,7 +269,7 @@ function pmFromUserAgent (userAgent) {
 
 ## 7. 总结
 
-我们通过从团队需要规范统一包管理器的实际场景出发，讲了 vue3 源码中 preinstall 钩子 约束只能使用 pnpm 。同时通过查看 element-plus 源码和 pnpm 文档，了解到 [only-allow](https://github.com/pnpm/only-allow.git) 这个包。可以做到一句话统一规范包管理器`"preinstall": "npx only-allow pnpm"`。
+我们通过从团队需要规范统一包管理器的实际场景出发，讲了 vue3 源码中 preinstall 钩子 约束只能使用 pnpm 。同时通过查看 [vite](https://github.com/vitejs/vite/blob/main/package.json#L12) 源码和 [pnpm](https://pnpm.io/only-allow-pnpm) 文档，了解到 [only-allow](https://github.com/pnpm/only-allow.git) 这个包。可以做到一行代码统一规范包管理器`"preinstall": "npx only-allow pnpm"`。
 
 也学习了其原理。only-allow 期待的包管理器和运行的包管理器对比。匹配失败，则报错。而which-pm-runs 通过获取 `process.env.npm_config_user_agent` 变量获取到当前运行脚本的包管理器和版本号。
 
